@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,9 +28,11 @@ public class User {
 	private Integer id;
 	private String name;
 	private String email;
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	private String mobile;
 	private Integer pinCode;
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dob;
 	private String address;
 	

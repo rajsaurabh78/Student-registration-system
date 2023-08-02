@@ -1,5 +1,7 @@
 package com.masai.service;
 
+import java.util.List;
+
 import com.masai.modal.Batch;
 import com.masai.modal.Course;
 import com.masai.modal.User;
@@ -14,8 +16,8 @@ public interface AdminService {
 	public Course getAllCourseDetailsById(Integer courseId);
 	public Course getAllCourseDetailsByName(String courseName);
 	public String allocateStudentsCourseAndBatch(Integer id,Integer courseId,Integer batchId);
-	public Batch updateSeatsOfaBatch(Integer batchId, Integer seats);
-	public User getStudentByBatch(String BatchName);
+	public String updateSeatsOfaBatch(Integer batchId, Integer seats);
+	public List<User> getStudentByBatch(String BatchName);
 	
 	
 	

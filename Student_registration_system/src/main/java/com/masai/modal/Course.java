@@ -3,6 +3,8 @@ package com.masai.modal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,7 +27,7 @@ public class Course {
 	private String duration;
 	@OneToMany(cascade = CascadeType.ALL,mappedBy = "course",fetch = FetchType.EAGER)
 	private List<Batch> batchs=new ArrayList<>();
-	
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL,mappedBy = "courseList")
-	private List<User> empList = new ArrayList<>();
+	private List<User> userList = new ArrayList<>();
 }
