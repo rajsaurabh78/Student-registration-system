@@ -82,10 +82,10 @@ public class AdminController {
 		
 	}
 	
-	@PutMapping("/courses/{id}/{cId}/{bId}")
+	@PutMapping("/courses/{id}/{cId}")
 	public ResponseEntity<String> allocateStudentsCourseAndBatchHandler(@Valid @PathVariable("id")Integer id
-			,@Valid @PathVariable("cId")Integer cId,@Valid @PathVariable("bId")Integer bId){
-		String msg=adminService.allocateStudentsCourseAndBatch(id, cId, bId);
+			,@Valid @PathVariable("cId")Integer cId){
+		String msg=adminService.allocateStudentsCourseAndBatch(id, cId);
 		return new ResponseEntity<>(msg,HttpStatus.OK);
 		
 	}
@@ -97,9 +97,16 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/batch/{batch}")
-	public ResponseEntity<List<User>> getStudentByBatchHandler(@Valid @PathVariable("batch")String batch){
-		List<User> list=adminService.getStudentByBatch(batch);
+	@GetMapping("/batch")
+	public ResponseEntity<List<User>> getStudentByBatchNameHandler(@Valid @RequestParam("batch")String batch){
+		List<User> list=adminService.getStudentByBatchName(batch);
+		return new ResponseEntity<>(list,HttpStatus.CREATED);
+		
+	}
+	
+	@GetMapping("/batch/{bId}")
+	public ResponseEntity<List<User>> getStudentByBatchIdHandler(@Valid @PathVariable("bId")Integer bId){
+		List<User> list=adminService.getStudentByBatchId(bId);
 		return new ResponseEntity<>(list,HttpStatus.CREATED);
 		
 	}

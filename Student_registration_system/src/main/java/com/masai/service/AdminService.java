@@ -15,10 +15,10 @@ public interface AdminService {
 	public String deleteCourse(Integer courseId);
 	public Course getAllCourseDetailsById(Integer courseId);
 	public Course getAllCourseDetailsByName(String courseName);
-	public String allocateStudentsCourseAndBatch(Integer id,Integer courseId,Integer batchId);
+	public String allocateStudentsCourseAndBatch(Integer id,Integer courseId);
 	public String updateSeatsOfaBatch(Integer batchId, Integer seats);
-	public List<User> getStudentByBatch(String BatchName);
-	
+	public List<User> getStudentByBatchName(String BatchName);
+	public List<User> getStudentByBatchId(Integer bId);
 	
 	
 }

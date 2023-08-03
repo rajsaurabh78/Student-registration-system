@@ -23,12 +23,12 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-	@PutMapping("/students{courseId}/{id}")
-	public ResponseEntity<User> updateStudentHandler(@Valid @PathVariable("courseId")Integer courseId,
+	@PutMapping("/students/{courseId}/{id}")
+	public ResponseEntity<String> registerInaCourseHandler(@Valid @PathVariable("courseId")Integer courseId,
 			@Valid @PathVariable("id")Integer id){
-		User usr=studentService.registerInaCourse(courseId, id);
+		String msg=studentService.registerInaCourse(courseId, id);
 		
-		return new ResponseEntity<>(usr,HttpStatus.OK);
+		return new ResponseEntity<>(msg,HttpStatus.OK);
 	}
 	
 	@PutMapping("/students")

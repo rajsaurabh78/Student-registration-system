@@ -108,32 +108,54 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public String allocateStudentsCourseAndBatch(Integer id, Integer courseId, Integer batchId) {
+	public String allocateStudentsCourseAndBatch(Integer id, Integer courseId) {
+		boolean flag=false;
+		boolean flag2=true;
+		String bName="";
 		Optional<User> opt=userRepository.findById(id);
 		if(opt.isEmpty()) {
 			throw new UserException("Inviled user id...");
 		}else {
-			Optional<Course> cors=courseRepository.findById(courseId);
-			if(cors.isPresent()) {
-				Optional<Batch> bth=batchRepository.findById(batchId);{
-					if(bth.isPresent()) {
-						Batch batc=bth.get();
-						if(batc.getSeats()>0) {
-							batc.setSeats(batc.getSeats()-1);
-							List<Course> list=new ArrayList<>();
-							list.add(cors.get());
-							opt.get().setCourseList(list);
-							userRepository.save(opt.get());
-							return "seat got alloted...";
-						}else {
-							throw new BatchException("Seat not avalible...");
-						}
-					}else {
-						throw new BatchException("Inviled Batch Id...");
-					}
+			User user=opt.get();
+			List<Course> clist=user.getCourseList();
+			for(Course i:clist) {
+				if(i.getCid()==courseId) {
+					flag2=false;
+					break;
 				}
+			}
+			
+			
+			if(flag2) {
+				
+				Optional<Course> cors=courseRepository.findById(courseId);
+				if(cors.isPresent()) {
+					Course course=cors.get();
+					List<Batch> blist= course.getBatchs();
+					
+					for(Batch i:blist) {
+						if(i.getSeats()>0) {
+							bName+=i.getName();
+							i.setSeats(i.getSeats()-1);
+							List<Course> list=new ArrayList<>();
+							list.add(course);
+							user.setCourseList(list);
+							userRepository.save(user);
+							flag=true;
+							break;
+						}
+					}
+					if(flag) {
+						return "seat got alloted in course :"+course.getName()+" & Batch : "+bName;
+					}else {
+						throw new BatchException("Seat not avalible...");
+					}		
+				
+				}else {
+					throw new CourseException("Inviled Course id...");
+				}	
 			}else {
-				throw new CourseException("Inviled Course id...");
+				throw new CourseException("Student already present in this course.");
 			}
 		}
 	}
@@ -152,7 +174,7 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<User> getStudentByBatch(String BatchName) {
+	public List<User> getStudentByBatchName(String BatchName) {
 
 		Optional<Batch> opt=batchRepository.findByName(BatchName);
 		if(opt.isPresent()) {
@@ -163,6 +185,19 @@ public class AdminServiceImpl implements AdminService{
 			throw new BatchException("Invilade batch name");
 		}
 		
+	}
+
+	@Override
+	public List<User> getStudentByBatchId(Integer bId) {
+		
+		Optional<Batch> opt=batchRepository.findById(bId);
+		if(opt.isPresent()) {
+			Batch bat=opt.get();
+			Course cor=bat.getCourse();
+			return cor.getUserList();
+		}else {
+			throw new BatchException("Invilade batch Id...");
+		}
 	}
 
 }

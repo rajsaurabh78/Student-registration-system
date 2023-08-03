@@ -23,23 +23,37 @@ public class studentServiceImpl implements StudentService{
 	private CourseRepository courseRepository;
 
 	@Override
-	public User registerInaCourse(Integer courseId, Integer id) {
-		
+	public String registerInaCourse(Integer courseId, Integer id) {
+		boolean flag=true;
 		Optional<User> opt=userRepository.findById(id);
 		if(opt.isPresent()) {
-			Optional<Course> crs=courseRepository.findById(id);
-			if(crs.isPresent()) {
-				User user=opt.get();
-				List<Course> list=new ArrayList<>();
-				list.add(crs.get());
-				user.setCourseList(list);
-				userRepository.save(user);
-				return user;
-			}else
-				throw new CourseException("Inviled course id...");
-			
-		}else
+			User user=opt.get();
+			List<Course> clist=user.getCourseList();
+			for(Course i:clist) {
+				if(i.getCid()==courseId) {
+					flag=false;
+					break;
+				}
+			}
+				if(flag) {
+					Optional<Course> crs=courseRepository.findById(courseId);
+					if(crs.isPresent()) {
+						Course course=crs.get();	
+						List<Course> list=new ArrayList<>();
+						list.add(course);
+						user.setCourseList(list);
+						userRepository.save(user);
+						return "You are successfully registered with course : "+course.getName();
+					}else {
+						throw new CourseException("Inviled course id...");
+					}
+			}else {
+				throw new CourseException("You are already applied for this course.");
+			}
+		}else {
 			throw new UserException("Inviled user id..");
+		}
+			
 		
 	}
 
