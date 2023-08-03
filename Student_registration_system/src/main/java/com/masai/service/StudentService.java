@@ -1,15 +1,14 @@
 package com.masai.service;
 
-import java.util.Map;
+import java.util.List;
 
-import com.masai.modal.Batch;
 import com.masai.modal.Course;
 import com.masai.modal.User;
 
 public interface StudentService {
 		
-	public User registerInaCourse(Integer courseId);
+	public User registerInaCourse(Integer courseId,Integer id);
 	public User updateStudent(User user);
-	public Map<Course,Batch> seallDetailsOfAllCourses();
+	public List<Course> seeAllDetailsOfAllCourses();
 	
 }
