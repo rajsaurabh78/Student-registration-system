@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.modal.Address;
 import com.masai.modal.Course;
 import com.masai.modal.User;
 import com.masai.service.StudentService;
@@ -36,6 +37,13 @@ public class StudentController {
 		User usr=studentService.updateStudent(user);
 		
 		return new ResponseEntity<>(usr,HttpStatus.OK);
+	}
+	
+	@PutMapping("/students/{id}")
+	public ResponseEntity<List<Address>> updateStudentAddressHandler(@Valid @PathVariable("id")Integer id,@Valid @RequestBody Address address){
+		List<Address> list=studentService.updateStudentAddress(id, address);
+		
+		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
 	@GetMapping("/students")

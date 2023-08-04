@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.masai.exception.CourseException;
 import com.masai.exception.UserException;
+import com.masai.modal.Address;
 import com.masai.modal.Course;
 import com.masai.modal.User;
 import com.masai.repository.CourseRepository;
@@ -67,8 +68,6 @@ public class studentServiceImpl implements StudentService{
 			stu.setDob(user.getDob());
 			stu.setMobile(user.getMobile());
 			stu.setPassword(user.getPassword());
-			stu.setPinCode(user.getPinCode());
-			stu.setAddress(user.getAddress());
 			
 			return userRepository.save(stu);
 		}else
@@ -84,6 +83,37 @@ public class studentServiceImpl implements StudentService{
 		}else
 			throw new CourseException("No any course avalible now.");
 		
+	}
+
+	@Override
+	public List<Address> updateStudentAddress(Integer id,Address address) {
+		boolean flag=true;
+		Optional<User> opt=userRepository.findById(id);
+		if(opt.isPresent()) {
+			User user=opt.get();
+			List<Address> list=user.getAddressList();
+			List<Address> aList=new ArrayList<>();
+			for(Address adrs:list) {
+				if(adrs.getType().toUpperCase().equals(address.getType().toUpperCase())) {
+					adrs.setCity(address.getCity());
+					adrs.setDistrict(address.getDistrict());
+					adrs.setPincode(address.getPincode());
+					adrs.setState(address.getState());
+					flag=false;
+					}
+				adrs.setUser(user);
+				aList.add(adrs);
+			}
+			if(flag) {
+				address.setUser(user);
+				aList.add(address);
+			}
+			user.setAddressList(aList);
+			userRepository.save(user);
+			return aList;
+		}else {
+			throw new UserException("Inviled user id.");
+		}
 	}
 
 

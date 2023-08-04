@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.masai.exception.BatchException;
 import com.masai.exception.CourseException;
 import com.masai.exception.UserException;
+import com.masai.modal.Address;
 import com.masai.modal.Authority;
 import com.masai.modal.Batch;
 import com.masai.modal.Course;
@@ -36,9 +37,14 @@ public class AdminServiceImpl implements AdminService{
 		
 //		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		List<Authority> authorities= user.getAuthorities();
+		
 		for(Authority authority:authorities) {
 			authority.setName("ROLE_"+authority.getName().toUpperCase());
 			authority.setUser(user);
+		}
+		List<Address>alist=user.getAddressList();
+		for(Address add:alist) {
+			add.setUser(user);
 		}
 		return userRepository.save(user);
 		
