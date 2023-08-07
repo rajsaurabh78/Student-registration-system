@@ -25,7 +25,7 @@ import lombok.Data;
 public class Course {
 	
 	@Id
-	//@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator ="course_seq")
 	@SequenceGenerator(name="course_seq", sequenceName="course_seq",allocationSize=1, initialValue=500)
 	private Integer Cid;

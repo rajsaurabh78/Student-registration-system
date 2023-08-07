@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.masai.exception.CourseException;
@@ -22,6 +23,9 @@ public class studentServiceImpl implements StudentService{
 	
 	@Autowired
 	private CourseRepository courseRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public String registerInaCourse(Integer courseId, Integer id) {
@@ -67,7 +71,7 @@ public class studentServiceImpl implements StudentService{
 			stu.setName(user.getName());
 			stu.setDob(user.getDob());
 			stu.setMobile(user.getMobile());
-			stu.setPassword(user.getPassword());
+			stu.setPassword(passwordEncoder.encode(user.getPassword()));
 			
 			return userRepository.save(stu);
 		}else

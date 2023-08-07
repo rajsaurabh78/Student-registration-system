@@ -27,14 +27,8 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@Autowired
-//	private StudentService studentService;
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
-	
 	@PostMapping("/admin")
 	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
-//		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		User use=adminService.createAdmin(user);
 		return new ResponseEntity<>(use,HttpStatus.CREATED);
 		
