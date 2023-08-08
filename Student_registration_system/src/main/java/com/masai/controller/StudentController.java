@@ -42,8 +42,8 @@ public class StudentController {
 	}
 	
 	@PutMapping("/students/{id}")
-	public ResponseEntity<List<Address>> updateStudentAddressHandler(@Valid @PathVariable("id")Integer id,@Valid @RequestBody Address address){
-		List<Address> list=studentService.updateStudentAddress(id, address);
+	public ResponseEntity<List<Address>> updateOrAddStudentAddressHandler(@Valid @PathVariable("id")Integer id,@Valid @RequestBody Address address){
+		List<Address> list=studentService.updateOrAddStudentAddress(id, address);
 		
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}

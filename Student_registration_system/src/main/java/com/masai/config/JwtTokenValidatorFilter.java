@@ -33,7 +33,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 						
 			try {
 
-				//extracting the word Bearer
+	
 				jwt = jwt.substring(7);
 
 				
@@ -54,10 +54,6 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 				Authentication auth = new UsernamePasswordAuthenticationToken(username, null, AuthorityUtils.commaSeparatedStringToAuthorityList(authorities));
 
 				
-//				List<GrantedAuthority> authorities=(List<GrantedAuthority>)claims.get("authorities");
-//				Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities); 
-				
-				
 				SecurityContextHolder.getContext().setAuthentication(auth);
 				
 			} catch (Exception e) {
@@ -74,9 +70,7 @@ public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 	}
 	
 	
-	
-	//this time this validation filter has to be executed for all the apis except the /login api
-	
+
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 	

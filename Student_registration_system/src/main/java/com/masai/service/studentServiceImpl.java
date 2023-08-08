@@ -90,7 +90,7 @@ public class studentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public List<Address> updateStudentAddress(Integer id,Address address) {
+	public List<Address> updateOrAddStudentAddress(Integer id,Address address) {
 		boolean flag=true;
 		Optional<User> opt=userRepository.findById(id);
 		if(opt.isPresent()) {

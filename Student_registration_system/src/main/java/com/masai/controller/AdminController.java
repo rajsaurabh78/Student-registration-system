@@ -93,7 +93,7 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/batches/{bId}")
+	@GetMapping("/students/{bId}")
 	public ResponseEntity<List<User>> getStudentByBatchIdHandler(@Valid @PathVariable("bId")Integer bId){
 		List<User> list=adminService.getStudentByBatchId(bId);
 		return new ResponseEntity<>(list,HttpStatus.CREATED);

@@ -27,7 +27,7 @@ public class AppConfig {
 		.requestMatchers(HttpMethod.PUT,"/admin/**").hasRole("ADMIN")
 		.requestMatchers(HttpMethod.GET,"/admin/**").hasRole("ADMIN")
 		.requestMatchers(HttpMethod.DELETE,"/admin/**").hasRole("ADMIN")
-		.requestMatchers(HttpMethod.GET,"/students/**").hasAnyRole("ADMIN","USER")
+		.requestMatchers(HttpMethod.GET,"/students/**").hasAnyRole("ADMIN","USER","STUDENT")
 		.anyRequest()
 		.authenticated()
 		.and()

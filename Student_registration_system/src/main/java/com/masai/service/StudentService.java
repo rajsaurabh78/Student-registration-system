@@ -10,7 +10,7 @@ public interface StudentService {
 		
 	public String registerInaCourse(Integer courseId,Integer id);
 	public User updateStudent(User user);
-	public List<Address> updateStudentAddress(Integer id,Address address);
+	public List<Address> updateOrAddStudentAddress(Integer id,Address address);
 	public List<Course> seeAllDetailsOfAllCourses();
 	
 }
