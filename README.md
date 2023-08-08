@@ -48,6 +48,7 @@ Roles for a Student:
 ### ER Diagram
 ------------
 
+![new_pro](https://github.com/rajsaurabh78/Student-registration-system/assets/108000350/ca8ff884-b661-4f40-bd58-c33b4b2ad62c)
 
 
 ### Explanation Video Link -  [Link]()
