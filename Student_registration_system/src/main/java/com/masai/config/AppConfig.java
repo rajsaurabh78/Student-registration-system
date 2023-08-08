@@ -4,34 +4,43 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 public class AppConfig {
 
 	@Bean
 	public SecurityFilterChain springSecurityConfiguration(HttpSecurity http) throws Exception {
-
-		http.authorizeHttpRequests()
-		.requestMatchers(HttpMethod.POST,"/admin").permitAll()
+		
+		http
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.csrf().disable()
+		.authorizeHttpRequests()
+		.requestMatchers(HttpMethod.POST, "/register")
+		.permitAll()
+		.requestMatchers(HttpMethod.POST,"/admin/**").hasRole("ADMIN")
+		.requestMatchers(HttpMethod.PUT,"/admin/**").hasRole("ADMIN")
+		.requestMatchers(HttpMethod.GET,"/admin/**").hasRole("ADMIN")
+		.requestMatchers(HttpMethod.DELETE,"/admin/**").hasRole("ADMIN")
+		.requestMatchers(HttpMethod.GET,"/students/**").hasAnyRole("ADMIN","USER")
 		.anyRequest()
 		.authenticated()
-		.and().csrf().disable()
+		.and()
+		.addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
+		.addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
 		.formLogin()
-		.and().httpBasic();
+		.and()
+		.httpBasic();
 
 		return http.build();
 
 	}
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-//		
-//		httpSecurity.authorizeHttpRequests().requestMatchers(HttpMethod.POST,"/admin").permitAll()
-//		.anyRequest().authenticated().and().csrf().disable().formLogin().and().httpBasic();
-//		return httpSecurity.build();
-//	}
+
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {

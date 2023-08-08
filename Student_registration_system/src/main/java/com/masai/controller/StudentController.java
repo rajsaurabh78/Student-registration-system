@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.masai.modal.Address;
 import com.masai.modal.Course;
 import com.masai.modal.User;
+import com.masai.service.AdminService;
 import com.masai.service.StudentService;
 
 import jakarta.validation.Valid;
@@ -23,6 +25,16 @@ public class StudentController {
 	
 	@Autowired
 	private StudentService studentService;
+	
+	@Autowired
+	private AdminService adminService;
+	
+	@PostMapping("/register")
+	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
+		User use=adminService.createAdmin(user);
+		return new ResponseEntity<>(use,HttpStatus.CREATED);
+		
+	}
 	
 	@PutMapping("/students/{courseId}/{id}")
 	public ResponseEntity<String> registerInaCourseHandler(@Valid @PathVariable("courseId")Integer courseId,

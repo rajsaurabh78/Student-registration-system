@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,40 +23,41 @@ import com.masai.service.AdminService;
 import jakarta.validation.Valid;
 
 @RestController
+@RequestMapping("/admin")
 public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
 	
-	@PostMapping("/admin")
-	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
-		User use=adminService.createAdmin(user);
-		return new ResponseEntity<>(use,HttpStatus.CREATED);
-		
-	}
-	
-	@PostMapping("/course")
+//	@PostMapping("/admin")
+//	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
+//		User use=adminService.createAdmin(user);
+//		return new ResponseEntity<>(use,HttpStatus.CREATED);
+//		
+//	}
+//	
+	@PostMapping("/courses")
 	public ResponseEntity<Course> createCourseHandler(@Valid @RequestBody Course course){
 		Course cour=adminService.createCourse(course);
 		return new ResponseEntity<>(cour,HttpStatus.CREATED);
 		
 	}
 	
-	@PostMapping("/batch/{id}")
+	@PostMapping("/batches/{id}")
 	public ResponseEntity<Batch> createBatchUnderCourseHandler(@Valid @RequestBody Batch batch,@Valid @PathVariable("id")Integer id){
 		Batch bth=adminService.createBatchUnderCourse(batch, id);
 		return new ResponseEntity<>(bth,HttpStatus.CREATED);
 		
 	}
 	
-	@PutMapping("/course/{cId}/{rs}")
+	@PutMapping("/courses/{cId}/{rs}")
 	public ResponseEntity<String> updateFeesHandler(@Valid @PathVariable("cId")Integer cId,@Valid @PathVariable("rs")Integer rs){
 		String msg=adminService.updateFees(cId, rs);
 		return new ResponseEntity<>(msg,HttpStatus.OK);
 		
 	}
 	
-	@DeleteMapping("/course/{cId}")
+	@DeleteMapping("/courses/{cId}")
 	public ResponseEntity<String> deleteCourseHandler(@Valid @PathVariable("cId")Integer cId){
 		String msg=adminService.deleteCourse(cId);
 		return new ResponseEntity<>(msg,HttpStatus.OK);
@@ -84,21 +86,21 @@ public class AdminController {
 		
 	}
 	
-	@PutMapping("/batchs/{bId}")
+	@PutMapping("/batches/{bId}")
 	public ResponseEntity<String> updateSeatsOfaBatchHandler(@Valid @RequestParam("seats")Integer seats,@Valid @PathVariable("bId")Integer bId){
 		String msg=adminService.updateSeatsOfaBatch(bId, seats);
 		return new ResponseEntity<>(msg,HttpStatus.CREATED);
 		
 	}
 	
-	@GetMapping("/batch")
+	@GetMapping("/batches")
 	public ResponseEntity<List<User>> getStudentByBatchNameHandler(@Valid @RequestParam("batch")String batch){
 		List<User> list=adminService.getStudentByBatchName(batch);
 		return new ResponseEntity<>(list,HttpStatus.CREATED);
 		
 	}
 	
-	@GetMapping("/batch/{bId}")
+	@GetMapping("/batches/{bId}")
 	public ResponseEntity<List<User>> getStudentByBatchIdHandler(@Valid @PathVariable("bId")Integer bId){
 		List<User> list=adminService.getStudentByBatchId(bId);
 		return new ResponseEntity<>(list,HttpStatus.CREATED);
