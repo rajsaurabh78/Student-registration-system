@@ -29,13 +29,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-//	@PostMapping("/admin")
-//	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
-//		User use=adminService.createAdmin(user);
-//		return new ResponseEntity<>(use,HttpStatus.CREATED);
-//		
-//	}
-//	
 	@PostMapping("/courses")
 	public ResponseEntity<Course> createCourseHandler(@Valid @RequestBody Course course){
 		Course cour=adminService.createCourse(course);
@@ -50,8 +43,8 @@ public class AdminController {
 		
 	}
 	
-	@PutMapping("/courses/{cId}/{rs}")
-	public ResponseEntity<String> updateFeesHandler(@Valid @PathVariable("cId")Integer cId,@Valid @PathVariable("rs")Integer rs){
+	@PutMapping("/courses/{cId}")
+	public ResponseEntity<String> updateFeesHandler(@Valid @PathVariable("cId")Integer cId,@Valid @RequestParam("rs")Integer rs){
 		String msg=adminService.updateFees(cId, rs);
 		return new ResponseEntity<>(msg,HttpStatus.OK);
 		
@@ -93,9 +86,9 @@ public class AdminController {
 		
 	}
 	
-	@GetMapping("/batches")
-	public ResponseEntity<List<User>> getStudentByBatchNameHandler(@Valid @RequestParam("batch")String batch){
-		List<User> list=adminService.getStudentByBatchName(batch);
+	@GetMapping("/students/{cId}")
+	public ResponseEntity<List<User>> getStudentsBycourseIdHandler(@Valid @PathVariable("cId") Integer cId){
+		List<User> list=adminService.getStudentsBycourseId(cId);
 		return new ResponseEntity<>(list,HttpStatus.CREATED);
 		
 	}

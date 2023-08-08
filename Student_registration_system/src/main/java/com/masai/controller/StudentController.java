@@ -26,16 +26,6 @@ public class StudentController {
 	@Autowired
 	private StudentService studentService;
 	
-	@Autowired
-	private AdminService adminService;
-	
-	@PostMapping("/register")
-	public ResponseEntity<User> createAdminHandler(@Valid @RequestBody User user){
-		User use=adminService.createAdmin(user);
-		return new ResponseEntity<>(use,HttpStatus.CREATED);
-		
-	}
-	
 	@PutMapping("/students/{courseId}/{id}")
 	public ResponseEntity<String> registerInaCourseHandler(@Valid @PathVariable("courseId")Integer courseId,
 			@Valid @PathVariable("id")Integer id){

@@ -17,7 +17,7 @@ public interface AdminService {
 	public Course getAllCourseDetailsByName(String courseName);
 	public String allocateStudentsCourseAndBatch(Integer id,Integer courseId);
 	public String updateSeatsOfaBatch(Integer batchId, Integer seats);
-	public List<User> getStudentByBatchName(String BatchName);
+	public List<User> getStudentsBycourseId(Integer courseId);
 	public List<User> getStudentByBatchId(Integer bId);
 	
 	

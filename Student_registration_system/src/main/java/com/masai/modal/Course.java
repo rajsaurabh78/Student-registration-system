@@ -30,7 +30,8 @@ public class Course {
 	@SequenceGenerator(name="course_seq", sequenceName="course_seq",allocationSize=1, initialValue=500)
 	private Integer Cid;
 	
-	@Column(unique = true)	@NotBlank(message ="Name should not Blank." )
+	@Column(unique = true)	
+	@NotBlank(message ="Name should not Blank." )
 	@NotEmpty(message ="Name should not Empty." )
 	@NotNull(message ="Name should not Null." )
 	private String name;

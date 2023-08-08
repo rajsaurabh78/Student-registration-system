@@ -182,27 +182,28 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	@Override
-	public List<User> getStudentByBatchName(String BatchName) {
+	public List<User> getStudentsBycourseId(Integer courseId) {
 
-		Optional<Batch> opt=batchRepository.findByName(BatchName);
+		Optional<Course> opt=courseRepository.findById(courseId);
 		if(opt.isPresent()) {
-			Batch bat=opt.get();
-			Course cor=bat.getCourse();
+			Course cor=opt.get();
 			return cor.getUserList();
 		}else {
-			throw new BatchException("Invilade batch name");
+			throw new BatchException("Invilade Course Id");
 		}
 		
 	}
 
 	@Override
-	public List<User> getStudentByBatchId(Integer bId) {
+	public List<User> getStudentByBatchId(Integer batchId) {
 		
-		Optional<Batch> opt=batchRepository.findById(bId);
+		Optional<Batch> opt= batchRepository.findById(batchId);
 		if(opt.isPresent()) {
-			Batch bat=opt.get();
-			Course cor=bat.getCourse();
-			return cor.getUserList();
+			Batch batch=opt.get();
+			Course course=batch.getCourse();
+			List<User> user=course.getUserList();
+			return user;
+		
 		}else {
 			throw new BatchException("Invilade batch Id...");
 		}
